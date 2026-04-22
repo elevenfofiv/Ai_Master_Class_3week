@@ -13,6 +13,7 @@ from models import UserAccountContext, InputGuardRailOutput, HandoffData
 from my_agent.menu_agent import menu_agent
 from my_agent.order_agent import order_agent
 from my_agent.reservation_agent import reservation_agent
+from my_agent.complain_agent import complain_agent
 
 input_guardrail_agent = Agent(
     name="Input Guardrail Agent",
