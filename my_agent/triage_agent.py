@@ -23,6 +23,7 @@ input_guardrail_agent = Agent(
     When evaluating the user's input, consider the following:
     - On-topic input includes queries about restaurant recommendations, menu preferences, dietary restrictions, food cravings, and related topics.
     - Off-topic input includes queries that are unrelated to restaurant recommendations, such as questions about unrelated subjects (e.g., sports, politics) or personal information that is not relevant to the restaurant context.
+    - If the user's input includes swear words or inappropriate language, classify it as off-topic and provide a reason for the classification.
     
     Your response should be concise and focused on providing a clear classification of the user's input as either on-topic or off-topic.
     """,

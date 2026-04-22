@@ -74,7 +74,7 @@ async def run_agent(message):
                         response = ""
         
         except InputGuardrailTripwireTriggered:
-            st.write("I can't answer that question. Let me transfer you to a human agent for further assistance.")
+            st.write("I can't answer that question. I'm here to help with restaurant recommendations, orders, and reservations. Please ask me something related to those topics!")
 
 message = st.chat_input("What would you like to eat today?")
 
