@@ -86,14 +86,15 @@ def handle_handoff(
 
 def make_handoff(agent):
     return handoff(
-    agent=agent,
-    input_type=HandoffData,
-    input_filter=handoff_filters.remove_all_tools,
+        agent=agent,
+        input_type=HandoffData,
+        input_filter=handoff_filters.remove_all_tools,
+        on_handoff=lambda ctx, input: input,
     )
 
 triage_agent = Agent(
     name="Triage Agent",
     instructions=dynamic_triage_agent_instructions,
     input_guardrails=[off_topic_guardrail],
-    handoffs=[make_handoff(menu_agent), make_handoff(order_agent), make_handoff(reservation_agent)],
+    handoffs=[make_handoff(menu_agent), make_handoff(order_agent), make_handoff(reservation_agent), make_handoff(complain_agent)],
 )
