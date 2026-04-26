@@ -4,11 +4,11 @@ dotenv.load_dotenv()
 from openai import OpenAI
 import asyncio
 import streamlit as st
-from agents import Runner, SQLiteSession, InputGuardrailTripwireTriggered
+from agents import Runner, SQLiteSession, InputGuardrailTripwireTriggered,OutputGuardrailTripwireTriggered
 from models import UserAccountContext
 from my_agent.triage_agent import triage_agent
 
-clinet = OpenAI()
+client = OpenAI()
 
 user_account_context = UserAccountContext(
     user_id="1",
@@ -33,17 +33,18 @@ if "agent" not in st.session_state:
 async def paint_history():
     messages = await session.get_items()
     for message in messages:
-        with st.chat_message(message["role"]):
-            if message["role"] == "user":
-                st.write(message["content"])
-            else:
-                if message["type"] =="message":
-                    st.write(message["content"][0]["text"].replace("$", "\$"))
+        if "role" in message:
+            with st.chat_message(message["role"]):
+                if message["role"] == "user":
+                    st.write(message["content"])
+                else:
+                    if message["type"] =="message":
+                        st.write(message["content"][0]["text"].replace("$", "\\$"))
 
 asyncio.run(paint_history())
 
 async def run_agent(message):
-    with st.chat_message("au"):
+    with st.chat_message("ai"):
         text_placeholder  = st.empty()
         response = ""
 
@@ -62,7 +63,7 @@ async def run_agent(message):
 
                     if event.data.type == "response.output_text.delta":
                         response += event.data.delta
-                        text_placeholder.markdown(response.replace("$", "\$"))
+                        text_placeholder.write(response.replace("$", "\\$"))
                 
                 elif event.type == "agent_updated_stream_event":
 
@@ -76,6 +77,10 @@ async def run_agent(message):
         except InputGuardrailTripwireTriggered:
             st.write("I can't answer that question. I'm here to help with restaurant recommendations, orders, and reservations. Please ask me something related to those topics!")
 
+        except OutputGuardrailTripwireTriggered:
+            st.write("Sorry, I generated a response that violated my guidelines. Let's try again!")
+            st.session_state["text_placeholder"].empty()
+
 message = st.chat_input("What would you like to eat today?")
 
 if message:
@@ -83,3 +88,10 @@ if message:
     if message:
         with st.chat_message("human"):
             st.write(message)
+
+with st.sidebar:
+    reset = st.button("reset Memory")
+    if reset:
+        asyncio.run(session.clear_session())
+    st.write(asyncio.run(session.get_items()))
+    

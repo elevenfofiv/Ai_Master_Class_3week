@@ -20,6 +20,6 @@ def dynamic_order_agent_instructions(
     """
 
 order_agent = Agent(
-    name="Order Agent",
+    name="order_agent",
     instructions=dynamic_order_agent_instructions,
 )

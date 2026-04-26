@@ -19,6 +19,6 @@ def dynamic_reservation_agent_instructions(
     """
 
 reservation_agent = Agent(
-    name="Reservation Agent",
+    name="reservation_agent",
     instructions=dynamic_reservation_agent_instructions,
 )

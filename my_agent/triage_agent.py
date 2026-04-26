@@ -16,7 +16,7 @@ from my_agent.reservation_agent import reservation_agent
 from my_agent.complain_agent import complain_agent
 
 input_guardrail_agent = Agent(
-    name="Input Guardrail Agent",
+    name="input_guardrail_agent",
     instructions="""
     You are an input guardrail agent that evaluates user input to determine if it is on-topic or off-topic for a restaurant recommendation system. 
     Your task is to analyze the user's input and classify it as either on-topic or off-topic based on its relevance to restaurant recommendations, menu preferences, dietary restrictions, and related topics.
@@ -93,7 +93,7 @@ def make_handoff(agent):
     )
 
 triage_agent = Agent(
-    name="Triage Agent",
+    name="triage_agent",
     instructions=dynamic_triage_agent_instructions,
     input_guardrails=[off_topic_guardrail],
     handoffs=[make_handoff(menu_agent), make_handoff(order_agent), make_handoff(reservation_agent), make_handoff(complain_agent)],

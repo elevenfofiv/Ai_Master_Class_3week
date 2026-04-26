@@ -20,6 +20,6 @@ def dynamic_menu_agent_instructions(
     """
 
 menu_agent = Agent(
-    name="Menu Agent",
+    name="menu_agent",
     instructions=dynamic_menu_agent_instructions,
 )

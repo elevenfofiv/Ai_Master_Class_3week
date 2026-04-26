@@ -1,6 +1,8 @@
 from agents import Agent, RunContextWrapper
 from models import UserAccountContext
 
+
+
 def dynamic_complain_agent_instructions(
         wrapper: RunContextWrapper[UserAccountContext],
         agent: Agent[UserAccountContext],
@@ -17,6 +19,6 @@ def dynamic_complain_agent_instructions(
     """
 
 complain_agent = Agent(
-    name="Complain Agent",
+    name="complain_agent",
     instructions=dynamic_complain_agent_instructions,
 )
